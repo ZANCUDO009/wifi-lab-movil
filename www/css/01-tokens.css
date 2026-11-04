@@ -1,0 +1,59 @@
+/* ── Tokens de diseño · 5 temas: oscuro (por defecto), claro, alto contraste, neón y plano (blueprint) ──
+   Los nombres antiguos (--bg, --p, --tx…) se conservan: solo cambian sus valores.
+   Escala de superficies: --s0 fondo · --s1 panel · --s2 panel elevado · --s3 panel resaltado.
+   Los selectores usan [data-theme=…] sin :root para que la galería y el selector de temas
+   puedan previsualizar cada tema dentro de un recuadro. */
+:root,[data-theme=dark]{
+  --bg:#0a111d;--bg2:#0c1524;--p:#121d31;--p2:#18263f;--b:#263650;--t:#e8eef7;--m:#a4b5cb;
+  --tx:#3fb0ff;--rx:#2ee6a8;--am:#ffb547;--pu:#c395ff;--rd:#ff6b81;--ok:#2ee6a8;--hov:#1f4a7d;--sel:#12315a;
+  --cv:#0a111d;--cg:#1b2b44;--cw:#e8eef7;
+  --s0:#0a111d;--s1:#121d31;--s2:#18263f;--s3:#203252;
+  --brand:#3fb0ff;--brand2:#6c7bff;--accent:#ffb547;--signal:#2ee6a8;
+  --btn-grad:linear-gradient(180deg,#58bdff,#2f95ec);--btn-ink:#04182b;
+  --sh1:0 1px 2px #0006,0 2px 8px #0004;--sh2:0 2px 4px #0006,0 12px 32px #0007;
+  --r:10px;--r-lg:14px;--dur:.16s;--ease:cubic-bezier(.2,.7,.2,1);
+  --floor:#16233a;--floorA:.55;--roomA:.10;--wallTint:transparent;--wallTintA:0;--glow:1;
+  --fs:1;--tap:38px;
+}
+[data-theme=light]{
+  --bg:#eef3f9;--bg2:#e3eaf3;--p:#ffffff;--p2:#f1f5fb;--b:#b7c5d8;--t:#12202f;--m:#44566b;
+  --tx:#0a62d0;--rx:#07806a;--am:#a35f00;--pu:#6b3fc0;--rd:#c0213d;--ok:#07806a;--hov:#cfe1fa;--sel:#dae8fb;
+  --cv:#fbfdff;--cg:#dbe5f0;--cw:#12202f;
+  --s0:#eef3f9;--s1:#ffffff;--s2:#f1f5fb;--s3:#e4edf9;
+  --brand:#0a62d0;--brand2:#5b45d6;--accent:#d97706;--signal:#07806a;
+  --btn-grad:linear-gradient(180deg,#2b83e6,#0a62d0);--btn-ink:#fff;
+  --sh1:0 1px 2px #1a2c4818,0 2px 8px #1a2c4812;--sh2:0 2px 4px #1a2c4818,0 12px 32px #1a2c4826;
+  --floor:#e9eff7;--floorA:.7;--roomA:.12;--glow:0;
+}
+[data-theme=contrast]{
+  --bg:#000;--bg2:#000;--p:#0a0a0a;--p2:#161616;--b:#9a9a9a;--t:#fff;--m:#e6e6e6;
+  --tx:#5cc8ff;--rx:#3dffc0;--am:#ffd23f;--pu:#e0b0ff;--rd:#ff7a90;--ok:#3dffc0;--hov:#1f3f66;--sel:#0b2a52;
+  --cv:#000;--cg:#2e2e2e;--cw:#fff;
+  --s0:#000;--s1:#0a0a0a;--s2:#161616;--s3:#222;
+  --brand:#5cc8ff;--brand2:#e0b0ff;--accent:#ffd23f;--signal:#3dffc0;
+  --btn-grad:linear-gradient(180deg,#5cc8ff,#5cc8ff);--btn-ink:#000;
+  --sh1:none;--sh2:0 0 0 2px #fff;--floor:#101010;--floorA:.4;--roomA:.14;--glow:0;
+}
+[data-theme=neon]{
+  --bg:#05060f;--bg2:#070815;--p:#0c0e22;--p2:#12152e;--b:#2b2f66;--t:#f0f3ff;--m:#aab2e6;
+  --tx:#19e6ff;--rx:#39ff9c;--am:#ffd23f;--pu:#ff3df2;--rd:#ff4d7a;--ok:#39ff9c;--hov:#1a2a6e;--sel:#101a4d;
+  --cv:#04050d;--cg:#14173a;--cw:#f0f3ff;
+  --s0:#04050d;--s1:#0c0e22;--s2:#12152e;--s3:#1a1e44;
+  --brand:#19e6ff;--brand2:#ff3df2;--accent:#ffd23f;--signal:#39ff9c;
+  --btn-grad:linear-gradient(90deg,#19e6ff,#7d6bff 60%,#ff3df2);--btn-ink:#05060f;
+  --sh1:0 0 0 1px #19e6ff22,0 2px 10px #000a;--sh2:0 0 0 1px #19e6ff44,0 0 28px #19e6ff22,0 14px 34px #000b;
+  --floor:#0b0d26;--floorA:.6;--roomA:.13;--wallTint:#6a3dff;--wallTintA:.22;--glow:1.4;
+}
+[data-theme=blueprint]{
+  --bg:#0a2d5e;--bg2:#08254e;--p:#0f3c78;--p2:#134686;--b:#6ea4e6;--t:#f4f9ff;--m:#c2d8f5;
+  --tx:#9fdcff;--rx:#9dffd8;--am:#ffe27a;--pu:#e3c9ff;--rd:#ffa0b0;--ok:#9dffd8;--hov:#1d5aa8;--sel:#164c92;
+  --cv:#0c3a74;--cg:#2468b8;--cw:#ffffff;
+  --s0:#0a2d5e;--s1:#0f3c78;--s2:#134686;--s3:#1a5398;
+  --brand:#9fdcff;--brand2:#ffffff;--accent:#ffe27a;--signal:#9dffd8;
+  --btn-grad:linear-gradient(180deg,#bfe6ff,#8fd0ff);--btn-ink:#06264d;
+  --sh1:0 0 0 1px #ffffff22;--sh2:0 0 0 1px #ffffff44,0 12px 30px #0006;
+  --floor:#0f4586;--floorA:.35;--roomA:.12;--wallTint:#1d6fd8;--wallTintA:.5;--glow:.6;
+}
+body.feria,body.lg{--tap:46px}
+@media (pointer:coarse){:root{--tap:46px}}
+body.feria{--brand:#19e6ff;--brand2:#ff3df2}

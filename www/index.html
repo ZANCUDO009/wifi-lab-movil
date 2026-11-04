@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07101F">
+<!-- Política de seguridad: solo código/imagenes propios del proyecto; sin conexiones externas. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; worker-src blob:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Wi-Fi Lab · Simulador de propagación, reflexión y atenuación de ondas Wi-Fi</title>
+<link rel="stylesheet" href="css/01-tokens.css">
+<link rel="stylesheet" href="css/02-base.css">
+<link rel="stylesheet" href="css/03-header.css">
+<link rel="stylesheet" href="css/04-layout.css">
+<link rel="stylesheet" href="css/05-results.css">
+<link rel="stylesheet" href="css/06-overlays.css">
+<link rel="stylesheet" href="css/07-modals.css">
+<link rel="stylesheet" href="css/08-responsive.css">
+<link rel="stylesheet" href="css/09-icons.css">
+<link rel="stylesheet" href="css/10-pro.css">
+<link rel="stylesheet" href="css/11-app-movil.css">
+</head>
+<body class="lv-i">
+<a class="sr" href="#cv">Saltar al plano de simulación</a>
+<header>
+  <div class="brand"><b><span class="ic-brand" data-ic="ui.wifi"></span>Wi-Fi Lab</b><small>Propagación y cobertura · <span id="fq">2.4</span> GHz</small></div>
+  <nav class="tabs2" aria-label="Áreas del simulador">
+    <span class="tab-ind" id="tabInd" aria-hidden="true"></span>
+    <button class="tab on" data-a="menu" data-p="sim" aria-haspopup="true" aria-expanded="false" id="tabSim">Simular ▾</button>
+    <button class="tab" data-a="menu" data-p="lab" aria-haspopup="true" aria-expanded="false">Laboratorio ▾</button>
+    <button class="tab" data-a="menu" data-p="fis" aria-haspopup="true" aria-expanded="false">Física ▾</button>
+    <button class="tab" data-a="menu" data-p="inf" aria-haspopup="true" aria-expanded="false">Informe ▾</button>
+  </nav>
+  <span id="busy" role="status" aria-live="off"><i></i><span id="busyT">Listo</span></span>
+  <div class="hdr-r">
+    <label class="x-hide" style="margin:0" for="lvl"><span class="sr">Nivel</span>
+      <select id="lvl" data-ch="level" aria-label="Nivel de detalle"><option value="b">Nivel: Básico</option><option value="i" selected>Nivel: Intermedio</option><option value="e">Nivel: Experto</option></select></label>
+    <button class="x-hide" data-a="theme" title="Elegir tema visual" aria-label="Elegir tema visual">◐ Tema</button>
+    <button class="x-hide" data-a="fsz" data-p="-1" title="Texto más pequeño" aria-label="Texto más pequeño">Aa−</button>
+    <button class="x-hide" data-a="fsz" data-p="1" title="Texto más grande" aria-label="Texto más grande">Aa+</button>
+    <button data-a="help" title="Ayuda y atajos (?)" aria-label="Ayuda y atajos">?</button>
+    <button class="pri" data-a="feria" title="Modo feria (P)">Modo feria</button>
+  </div>
+</header>
+<div id="app">
+  <aside id="L" aria-label="Controles del escenario"></aside>
+  <main>
+    <canvas id="cv" tabindex="0" role="img" aria-label="Plano de simulación Wi-Fi"></canvas>
+    <div class="ov" id="tb" role="toolbar" aria-label="Vista y capas">
+      <div class="seg" role="group" aria-label="Vista">
+        <button id="b2" data-a="mode" data-p="2d" aria-pressed="true">2D</button>
+        <button id="b3" data-a="mode" data-p="3d" aria-pressed="false">3D</button>
+      </div>
+      <button data-a="menu" data-p="map" id="bMap" aria-haspopup="true">🔥 Mapa de calor ▾</button>
+      <button data-a="menu" data-p="lay" aria-haspopup="true">Capas ▾</button>
+      <button data-a="menu" data-p="tool" id="bTool" aria-haspopup="true">✏️ Herramientas ▾</button>
+      <button data-a="leg" id="bLeg" aria-pressed="false" title="Mostrar u ocultar la leyenda">ℹ Leyenda</button>
+      <button data-a="snd" id="bSnd" aria-pressed="false" title="Sonificación: el tono sube con la señal">🔈</button>
+    </div>
+    <div class="ov" id="zc"><button data-a="zoom" data-p="1" aria-label="Acercar plano" title="Acercar">+</button><button data-a="zoom" data-p="-1" aria-label="Alejar plano" title="Alejar">−</button><button data-a="zoom" data-p="0" aria-label="Centrar plano" title="Centrar (doble clic)">⌂</button></div>
+    <div class="ov" id="v3" role="toolbar" aria-label="Controles de la vista 3D">
+      <button data-a="view3" data-p="iso" title="Vista isométrica">Isométrica</button>
+      <button data-a="view3" data-p="top" title="Vista cenital (desde arriba)">Cenital</button>
+      <button data-a="view3" data-p="front" title="Vista frontal">Frontal</button>
+      <button id="bSurf" data-a="surf" aria-pressed="false" title="Alterna el mapa de calor entre plano y superficie con relieve">Plano</button>
+      <label>Relieve <input type="range" id="exag" min="0.3" max="3" step="0.1" value="1" data-in="exag" aria-label="Exageración del relieve del mapa de calor"></label>
+      <button id="bOrb" data-a="orbit" aria-pressed="false" title="Girar la cámara lentamente">Órbita</button>
+    </div>
+    <div class="ov chip" id="cbar" aria-label="Distribución de la cobertura"></div>
+    <div class="ov chip" id="status"></div>
+    <div class="ov chip" id="hint" role="status"></div>
+    <div class="ov chip" id="plwait"></div>
+    <div class="ov" id="anim" role="group" aria-label="Controles de animación">
+      <button data-a="arst" title="Reiniciar animación" aria-label="Reiniciar animación">⏮</button>
+      <button id="bp" data-a="pause" aria-label="Pausar o reanudar">⏸</button>
+      <button data-a="astep" title="Avanzar un paso" aria-label="Paso">⏭</button>
+      <input type="range" id="scrub" min="0" max="1000" value="0" data-in="scrub" aria-label="Posición de la onda">
+      <button data-a="aspd" data-p=".1" class="x-i sp">×0.1</button><button data-a="aspd" data-p="1" class="x-i sp">×1</button><button data-a="aspd" data-p="5" class="x-i sp">×5</button>
+    </div>
+    <div class="ov chip" id="chip"></div>
+    <div class="ov chip" id="leg"></div>
+    <canvas class="ov" id="mm" width="180" height="130" aria-label="Minimapa"></canvas>
+    <div class="ov chip" id="probe" role="tooltip"></div>
+    <button class="ov pri" id="exitF" data-a="feria">Salir de feria</button>
+  </main>
+  <aside id="R" aria-label="Resultados"></aside>
+</div>
+<div id="dock"><button data-a="drawer" data-p="L">⚙ Controles</button><button data-a="drawer" data-p="R">📊 Resultados</button></div>
+<div id="tour" role="dialog" aria-label="Tour guiado"></div>
+<div id="pres" role="dialog" aria-label="Modo presentador"></div>
+<div class="modal" id="mi" role="dialog" aria-modal="true" aria-labelledby="mit"><div class="box" id="mib" tabindex="-1"></div></div>
+<div id="menus"></div>
+<div class="sr" id="live" aria-live="polite"></div>
+<div id="sbub" aria-hidden="true"></div><div id="cht" aria-hidden="true"></div><div id="chd" aria-hidden="true"></div>
+<input type="file" id="fl" accept=".json" style="display:none" data-ch="loadJ">
+<input type="file" id="plf" accept="image/*" style="display:none" data-ch="planFile">
+<input type="file" id="csvf" accept=".csv,.txt" style="display:none" data-ch="csvFile">
+
+<script src="js/data/materials.js"></script>
+<script src="js/core/physics.js"></script>
+<script src="js/data/presets.js"></script>
+<script src="js/tests/tests.js"></script>
+<script src="js/core/state.js"></script>
+<script src="js/core/scene-io.js"></script>
+<script src="js/engine/heatmap-engine.js"></script>
+<script src="js/engine/contours.js"></script>
+
+<!-- ═══ MOTOR VISUAL: texturas e iconos (ver README.md) ═══ -->
+<script src="js/render/textures.js"></script>
+<script src="js/render/icons.js"></script>
+
+<!-- TEXTURAS: un archivo por material. Para un material nuevo, añade aquí su línea. -->
+<script src="assets/textures/drywall.js"></script>
+<script src="assets/textures/wood.js"></script>
+<script src="assets/textures/glass.js"></script>
+<script src="assets/textures/glass_film.js"></script>
+<script src="assets/textures/wood_glass.js"></script>
+<script src="assets/textures/brick.js"></script>
+<script src="assets/textures/concrete.js"></script>
+<script src="assets/textures/metal.js"></script>
+<script src="assets/textures/body.js"></script>
+<!-- Pack v2: materiales nuevos y suelos -->
+<script src="assets/textures/marble.js"></script>
+<script src="assets/textures/wood_dark.js"></script>
+<script src="assets/textures/plaster.js"></script>
+<script src="assets/textures/brick_white.js"></script>
+<script src="assets/textures/glass_tempered.js"></script>
+<script src="assets/textures/mesh.js"></script>
+<script src="assets/textures/green_wall.js"></script>
+<script src="assets/textures/false_ceiling.js"></script>
+<script src="assets/textures/floor_tile.js"></script>
+<script src="assets/textures/floor_wood.js"></script>
+<script src="assets/textures/floor_concrete.js"></script>
+<script src="assets/textures/floor_carpet.js"></script>
+
+<!-- ICONOS: uno por carpeta/categoría. -->
+<!-- ICONOS · UI (botones y menús) -->
+<script src="assets/icons/ui/acciones.js"></script>
+<script src="assets/icons/ui/medios.js"></script>
+<script src="assets/icons/ui/estado.js"></script>
+<script src="assets/icons/ui/educacion.js"></script>
+<script src="assets/icons/ui/fisica.js"></script>
+<script src="assets/icons/ui/_emoji-map.js"></script>
+<!-- ICONOS · DISPOSITIVOS (objetos que se dibujan en el plano 2D y 3D) -->
+<script src="assets/icons/devices/routers.js"></script>
+<script src="assets/icons/devices/clients.js"></script>
+<script src="assets/icons/devices/equipos_v2.js"></script>
+<!-- ICONOS · MATERIALES -->
+<script src="assets/icons/materials/materiales.js"></script>
+
+<script src="js/render/view.js"></script>
+<script src="js/render/fx.js"></script>
+<script src="js/render/heatmap-paint.js"></script>
+<script src="js/render/draw2d.js"></script>
+<script src="js/render/draw3d.js"></script>
+<script src="js/render/minimap-legend.js"></script>
+<script src="js/ui/modal-help.js"></script>
+<script src="js/ui/controls.js"></script>
+<script src="js/ui/menus.js"></script>
+<script src="js/ui/viz.js"></script>
+<script src="js/ui/results.js"></script>
+<script src="js/ui/charts.js"></script>
+<script src="js/ui/actions.js"></script>
+<script src="js/ui/changes.js"></script>
+<script src="js/ui/polish.js"></script>
+<script src="js/features/sonification.js"></script>
+<script src="js/features/imported-plan.js"></script>
+<script src="js/features/measurements.js"></script>
+<script src="js/features/lab.js"></script>
+<script src="js/features/physics-inspector.js"></script>
+<script src="js/features/limits-and-tests.js"></script>
+<script src="js/features/optimizer.js"></script>
+<script src="js/features/costs-report.js"></script>
+<script src="js/features/comparator.js"></script>
+<script src="js/features/exports.js"></script>
+<script src="js/features/versions-help.js"></script>
+<script src="js/education/welcome.js"></script>
+<script src="js/education/tour.js"></script>
+<script src="js/education/missions.js"></script>
+<script src="js/education/predict.js"></script>
+<script src="js/education/quiz.js"></script>
+<script src="js/education/myths.js"></script>
+<script src="js/education/experiments.js"></script>
+<script src="js/education/logbook.js"></script>
+<script src="js/education/glossary.js"></script>
+<script src="js/education/scripts-demos-survey.js"></script>
+<script src="js/education/presenter.js"></script>
+<script src="js/interaction/input.js"></script>
+<script src="js/interaction/recompute.js"></script>
+<script src="js/interaction/feria-mode.js"></script>
+<script src="js/interaction/main-loop.js"></script>
+<script src="js/interaction/boot.js"></script>
+</body>
+</html>

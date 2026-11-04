@@ -1,0 +1,20 @@
+*{box-sizing:border-box}
+html{font-size:calc(15px*var(--fs))}
+body.feria{font-size:1.18rem}
+body{margin:0;height:100vh;height:100dvh;display:flex;flex-direction:column;background:var(--bg);color:var(--t);font:1rem/1.45 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;overflow:hidden}
+button,select,input{font:inherit;color:var(--t);background:var(--p);border:1px solid var(--b);border-radius:8px;padding:.3rem .65rem;max-width:100%}
+button{cursor:pointer;min-height:var(--tap);display:inline-flex;align-items:center;justify-content:center;gap:.35rem;line-height:1.15}
+select{min-height:var(--tap)}
+button:hover,button.on,button[aria-pressed=true]{background:var(--hov);border-color:var(--tx)}
+button.pri{background:var(--tx);border-color:var(--tx);color:#031425;font-weight:650}
+:root[data-theme=light] button.pri{color:#fff}
+button.warn{color:var(--rd)}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,canvas:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--tx);outline-offset:2px}
+button:disabled{opacity:.45;cursor:default}
+small,.mut{color:var(--m)}
+h2{margin:0 0 .3rem;font-size:1.3rem}h3{margin:.8rem 0 .3rem;font-size:1.05rem}
+hr{border:0;border-top:1px solid var(--b);margin:.5rem 0}
+a{color:var(--tx)}
+kbd{font:.85em ui-monospace,Consolas,monospace;background:var(--p2);border:1px solid var(--b);border-radius:4px;padding:0 .35em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+

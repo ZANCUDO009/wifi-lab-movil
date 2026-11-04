@@ -1,0 +1,31 @@
+/* ── Rejilla principal: el plano es protagonista ── */
+#app{flex:1;display:flex;min-height:0;position:relative}
+aside{overflow:auto;padding:.6rem;background:var(--bg2);display:flex;flex-direction:column;gap:.5rem;flex-shrink:0;scrollbar-width:thin}
+#L{width:19.5rem}
+#R{width:21rem}
+main{flex:1;position:relative;min-width:0;background:var(--cv)}
+#cv{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+body.feria #L{display:none}
+body.feria #R{width:26rem}
+body.nocursor #cv{cursor:none}
+
+details.card,.card{background:var(--p);border:1px solid var(--b);border-radius:10px;padding:.55rem .7rem}
+details.card>summary{cursor:pointer;font-weight:650;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:calc(var(--tap) - .6rem)}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:"▾";color:var(--m);transition:transform .15s}
+details.card:not([open])>summary::after{transform:rotate(-90deg)}
+details.card[open]>summary{margin-bottom:.3rem}
+label{display:block;color:var(--m);font-size:.9rem;margin:.45rem 0 .1rem}
+label b{float:right;color:var(--t);font-weight:600}
+label.ck{display:flex;gap:.5rem;align-items:center;color:var(--t);font-size:1rem;min-height:var(--tap);margin:0;cursor:pointer}
+label.ck input{width:1.2rem;height:1.2rem;padding:0;flex:none}
+input[type=range]{width:100%;padding:0;accent-color:var(--tx);min-height:1.9rem;background:transparent;border:0}
+input[type=number],input[type=text]{width:100%;min-height:var(--tap)}
+.row{display:flex;justify-content:space-between;gap:.5rem;padding:.12rem 0;font-size:.95rem}
+.row span:last-child{font-family:ui-monospace,Consolas,monospace;text-align:right}
+.row span:first-child{color:var(--m)}
+.q{display:inline-block;width:.9rem;text-align:center}
+.help{display:inline-flex;align-items:center;justify-content:center;min-height:0;width:1.3rem;height:1.3rem;padding:0;border-radius:50%;font-size:.75rem;margin-left:.3rem;color:var(--m);vertical-align:middle}
+.btns{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.4rem}
+.btns button{flex:1 1 auto}
+

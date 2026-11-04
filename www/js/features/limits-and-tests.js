@@ -1,0 +1,16 @@
+/* ── Límites del modelo (VA-12, C-12) ── */
+function lim() {
+  open_(`<h2>Límites del modelo</h2><div class="grid2"><div class="card2"><h3 style="margin-top:0">✔ Qué se modela</h3><p>Pérdida en espacio libre (Friis) con exponente ajustable, atenuación por pared${S.obl ? ' con camino oblicuo (espesor/cosθ)' : ''}, aperturas (puertas y ventanas), reflexiones especulares hasta ${S.bn} (método de imágenes) con |Γ| fijo${S.fres ? ' o Fresnel TE/TM' : ''}, rayos visuales con reflexión y transmisión, suma incoherente o coherente con fase, varios AP con canales y SINR, ruido térmico, MCS por RSSI y SNR, y el Modo Onda (FDTD 2D).</p></div>
+  <div class="card2"><h3 style="margin-top:0">✖ Qué NO se modela</h3><p>Difracción y dispersión en el modelo de rayos (solo en el Modo Onda), polarización, patrones de antena (todas son isotrópicas), suelo y techo (el modelo es 2D; la vista 3D es una proyección), personas en movimiento, Doppler, MIMO/beamforming real, control de acceso al medio (CSMA/CA) ni capacidad por usuario.</p></div></div>
+  <h3>Truncamientos</h3><ul><li>Máx. 10 trayectorias reflejadas por transmisor y hasta 3 reflexiones; corte a −110 dBm; distancia mínima 0.3 m.</li><li>Rayos visuales: poda a −98 dBm, hasta 8 transmisiones por rayo y 3500 segmentos por equipo.</li><li>El mapa de calor usa ${hmModelEff() === 'coh' ? 'suma coherente (con fase)' : 'suma incoherente'} y las reflexiones configuradas (${S.bn}); «Igual que el receptor» garantiza que mapa y sonda coinciden.</li><li>Una pared colineal con el rayo no lo atenúa; en un vértice compartido se cuenta una sola pared.</li></ul>
+  <h3>Rango de validez y validación</h3><p>Las fórmulas base están verificadas con pruebas automáticas (Física → Pruebas del motor). Los valores de los materiales son <b>de referencia educativa</b>: ${S.meas.length ? `con tus ${S.meas.length} mediciones el error actual es ${(() => { const s = measStats(); return s ? 'MAE ' + s.mae.toFixed(1) + ' dB, sesgo ' + sg(s.bias) + ' dB' : '—'; })()}` : 'aún no hay mediciones propias cargadas (Laboratorio → Simulación vs. medición)'}. La velocidad en Mbps es una estimación con sensibilidades y SNR mínimas típicas y ≈60 % de la tasa PHY: <b>no es un rendimiento garantizado</b>. Los costos y el ROI usan supuestos editables.</p>
+  <p><small>Verifica siempre la normativa local de potencia (EIRP) y los límites de exposición antes de instalar equipos reales.</small></p>`);
+}
+ACT.lim = lim;
+
+/* ── Pruebas del motor ── */
+ACT.tests = () => {
+  const r = Tests.run(), bad = r.filter(x => !x.ok).length;
+  open_(`<h2>Pruebas del motor</h2><p class="${bad ? 'bad' : 'good'}"><b>${bad ? '✖' : '✔'} ${r.length - bad} de ${r.length} pruebas correctas</b></p><p><small>Fórmulas verificadas (FSPL, ruido, Fresnel, Doppler…), valores de referencia por escenario (regresión), casos límite (vértices, paredes de longitud cero, aperturas), reciprocidad, varios AP y coherencia entre rayos dibujados y cálculo.</small></p><div class="scroll-x"><table><tr><th>Estado</th><th>Área</th><th>Prueba</th><th>Resultado</th></tr>${r.map(x => `<tr><td class="${x.ok ? 'good' : 'bad'}">${x.ok ? '✔' : '✖'}</td><td>${x.id}</td><td style="text-align:left">${esc(x.n)}</td><td style="text-align:left"><small>${esc(x.got)}</small></td></tr>`).join('')}</table></div>`, true);
+};
+

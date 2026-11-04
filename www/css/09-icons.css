@@ -1,0 +1,22 @@
+/* ── Iconos SVG (assets/icons) y vistas previas de texturas ── */
+.ic{display:inline-block;width:1.2em;height:1.2em;flex:none;vertical-align:-.22em}
+.ic-wrap{display:inline-flex;align-items:center;line-height:1}
+button .ic{width:1.15em;height:1.15em}
+#anim button .ic,#zc button .ic{width:1.3em;height:1.3em}
+.ic-brand{display:inline-block;margin-right:.35rem;color:var(--tx)}
+.ic-brand .ic{width:1.25em;height:1.25em;vertical-align:-.25em}
+.mi-ic{color:var(--tx)}
+/* Vista previa de la textura del material en el panel de pared */
+.matprev{position:relative;height:3.2rem;margin:.35rem 0 .2rem;border:1px solid var(--b);border-radius:8px;background-size:cover;background-position:center;overflow:hidden}
+.matprev::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(0,0,0,.28))}
+.matprev .ic{position:absolute;left:.5rem;top:50%;transform:translateY(-50%);width:1.7rem;height:1.7rem;z-index:1;color:#fff;filter:drop-shadow(0 1px 2px #000a)}
+.wl .tx-sw{display:inline-block;width:.95rem;height:.95rem;border-radius:4px;margin-right:.35rem;vertical-align:-.15rem;border:1px solid #0006}
+/* ── Duotono y animación (iconos v2) ── */
+.ic .d{fill:currentColor;fill-opacity:.26}
+.ic-duo{--ic2:currentColor}
+.ic .w1,.ic .w2,.ic .w3{transform-box:fill-box;transform-origin:center bottom}
+.ic-anim .w1{animation:icw 1.8s ease-in-out infinite}
+.ic-anim .w2{animation:icw 1.8s ease-in-out .25s infinite}
+.ic-anim .w3{animation:icw 1.8s ease-in-out .5s infinite}
+@keyframes icw{0%,100%{opacity:.25}40%{opacity:1}}
+body.nomotion .ic-anim .w1,body.nomotion .ic-anim .w2,body.nomotion .ic-anim .w3{animation:none}

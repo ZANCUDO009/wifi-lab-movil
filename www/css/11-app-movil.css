@@ -1,0 +1,9 @@
+/* ── Ajustes de la app móvil (Capacitor/Android) ── */
+html,body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+body{-webkit-touch-callout:none}
+#cv,#mm,header,#dock,#tb,#zc,#anim{-webkit-user-select:none;user-select:none}
+button,select,input[type=range]{touch-action:manipulation}
+@supports (padding:max(0px)){
+  header{padding-top:max(.3rem,env(safe-area-inset-top))}
+  #dock{padding-bottom:max(.3rem,env(safe-area-inset-bottom))}
+}

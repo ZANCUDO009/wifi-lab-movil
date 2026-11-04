@@ -1,0 +1,31 @@
+/* ── Resultados ── */
+#res{padding:.7rem .8rem}
+#res .big{font:700 2.7rem/1.05 ui-monospace,Consolas,monospace;text-align:center;margin:.1rem 0}
+#res .big span{font-size:1rem}
+#res .ql{text-align:center;font-weight:650;margin-bottom:.4rem}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin:.3rem 0}
+.tile{background:var(--p2);border:1px solid var(--b);border-radius:8px;padding:.35rem .4rem;text-align:center}
+.tile small{display:block;font-size:.76rem;line-height:1.15}
+.tile b{font:700 1.25rem ui-monospace,Consolas,monospace}
+body.feria #res .big{font-size:4.2rem}
+body.feria .tile b{font-size:1.7rem}
+.pth,.wl{display:flex;justify-content:space-between;gap:.4rem;padding:.3rem .5rem;border:1px solid var(--b);border-radius:8px;margin-top:.25rem;cursor:pointer;font-size:.92rem;min-height:calc(var(--tap) - .5rem);align-items:center}
+.pth.on{border-color:var(--am);background:color-mix(in srgb,var(--am) 16%,var(--p))}
+.wl.on,.apx.on{border-color:var(--tx);background:var(--sel)}
+.apx{display:flex;justify-content:space-between;gap:.4rem;padding:.3rem .5rem;border:1px solid var(--b);border-radius:8px;margin-top:.25rem;cursor:pointer;align-items:center;min-height:calc(var(--tap) - .5rem);font-size:.95rem}
+.st{padding:.2rem .6rem;border-left:3px solid var(--b);color:var(--m);font-size:.9rem}
+.st.a{border-color:var(--am);color:var(--t);background:color-mix(in srgb,var(--am) 16%,var(--p))}
+.st.d{color:var(--t);border-color:var(--m)}
+.eq{font:.95rem ui-monospace,Consolas,monospace;background:var(--bg2);border-radius:8px;padding:.6rem;margin:.5rem 0;color:var(--tx);overflow-x:auto}
+.warnb{border-left:4px solid var(--am);padding:.3rem .6rem;background:color-mix(in srgb,var(--am) 14%,var(--p));border-radius:6px;font-size:.9rem;margin:.3rem 0}
+.badb{border-left-color:var(--rd);background:color-mix(in srgb,var(--rd) 14%,var(--p))}
+.okb{border-left-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--p))}
+canvas.mini{width:100%;display:block;border-radius:6px;background:var(--bg2)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+td,th{border-bottom:1px solid var(--b);padding:.3rem .4rem;text-align:right;vertical-align:middle}
+th:first-child,td:first-child{text-align:left}
+td input[type=number],td select{width:6.5rem;min-height:2rem;padding:.1rem .4rem}
+.bb{flex-direction:column;gap:.1rem;text-align:center}
+.bb small{display:block}
+.scroll-x{overflow-x:auto}
+

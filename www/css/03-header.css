@@ -1,0 +1,19 @@
+/* ── Cabecera con cuatro áreas ── */
+header{display:flex;align-items:center;gap:.7rem;padding:.4rem .9rem;background:var(--bg2);border-bottom:1px solid var(--b);flex-wrap:wrap;position:relative;z-index:20}
+.brand{display:flex;flex-direction:column;line-height:1.15;margin-right:.6rem}
+.brand b{font-size:1.25rem;letter-spacing:.2px}
+.brand small{font-size:.78rem}
+nav.tabs2{display:flex;gap:.3rem}
+.tab{border-radius:8px;font-weight:600;padding:.3rem .9rem}
+.tab.on{background:var(--hov)}
+.hdr-r{margin-left:auto;display:flex;gap:.35rem;align-items:center;flex-wrap:wrap}
+.menu{position:fixed;z-index:40;background:var(--p);border:1px solid var(--tx);border-radius:10px;padding:.35rem;min-width:15rem;max-width:calc(100vw - 16px);max-height:80vh;overflow:auto;box-shadow:0 12px 40px #0008;display:none}
+.menu.on{display:block}
+.menu button{width:100%;justify-content:flex-start;text-align:left;border:0;background:transparent;border-radius:6px}
+.menu button:hover{background:var(--hov)}
+.menu hr{margin:.25rem 0}
+.menu .lbl{padding:.3rem .6rem 0;font-size:.8rem;color:var(--m)}
+.menu label{display:flex;align-items:center;gap:.5rem;padding:.35rem .6rem;min-height:var(--tap);cursor:pointer;margin:0;font-size:1rem;color:var(--t)}
+.menu label input{width:1.15rem;height:1.15rem;flex:none;padding:0}
+.menu select{width:100%;margin:.2rem 0}
+

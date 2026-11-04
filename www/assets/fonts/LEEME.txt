@@ -1,0 +1,6 @@
+FUENTE OPCIONAL · Inter
+El simulador usa Inter si está instalada en el equipo y, si no, la fuente del sistema (Segoe UI, Roboto…).
+Para incluirla con el proyecto (funciona sin internet):
+ 1. Descarga «Inter Variable» (licencia OFL) y guarda Inter-Variable.woff2 en esta carpeta.
+ 2. En css/10-pro.css descomenta el bloque @font-face del principio.
+ 3. La política de seguridad de index.html ya permite fuentes propias (font-src 'self').

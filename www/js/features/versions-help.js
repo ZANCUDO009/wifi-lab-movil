@@ -1,0 +1,15 @@
+/* ── Versiones y ayuda ── */
+ACT.versions = () => {
+  const v = versions(), au = Store.get('auto', null);
+  open_(`<h2>Versiones del escenario</h2><div class="btns"><input type="text" id="vname" placeholder="Nombre de la versión" style="flex:2" aria-label="Nombre de la versión"><button class="pri" data-a="vsave">Guardar versión actual</button></div>${v.length ? `<table><tr><th>Nombre</th><th>Fecha</th><th></th></tr>${v.map((x, i) => `<tr><td>${esc(x.name)}</td><td>${new Date(x.t).toLocaleString('es')}</td><td><button data-a="vload" data-p="${i}">Cargar</button> <button data-a="vdel" data-p="${i}" class="warn" aria-label="Eliminar">✕</button></td></tr>`).join('')}</table>` : '<p class="mut">Aún no hay versiones guardadas.</p>'}${au ? `<h3>Autoguardado</h3><p>Último cambio: ${new Date(au.t).toLocaleString('es')} <button data-a="vauto">Restaurar</button></p>` : ''}`);
+};
+ACT.vsave = () => { saveVersion($('vname').value.trim()); ACT.versions(); };
+ACT.vload = i => { const x = versions()[+i]; if (x) { try { applyScenario(x.s); S.preset = ''; touch(); panelsRefresh(); commit(); closeM(); hint('Versión cargada'); } catch (e) { hint('Versión no válida'); } } };
+ACT.vdel = i => { const v = versions(); v.splice(+i, 1); Store.set('versions', v); ACT.versions(); };
+ACT.vauto = () => { const a = Store.get('auto', null); if (a) { try { applyScenario(a.s); S.preset = ''; touch(); panelsRefresh(); commit(); closeM(); hint('Escenario restaurado'); } catch (e) { hint('No se pudo restaurar'); } } };
+function helpModal() {
+  open_(`<h2>Ayuda y atajos</h2><div class="grid2"><div class="card2"><h3 style="margin-top:0">Ratón y tacto</h3><ul><li>Arrastra el router, los AP, el dispositivo o los extremos de una pared.</li><li>Arrastra el fondo para desplazar; rueda o pellizco para acercar; doble clic o doble toque para centrar.</li><li>Pasa el cursor sobre el plano para ver la sonda de potencia.</li><li>En 3D: arrastra para girar; dos dedos para acercar y mover.</li></ul></div>
+  <div class="card2"><h3 style="margin-top:0">Teclado</h3><ul><li><kbd>Espacio</kbd> pausa · <kbd>P</kbd> modo feria · <kbd>Esc</kbd> salir/cerrar · <kbd>?</kbd> esta ayuda</li><li><kbd>1</kbd>–<kbd>9</kbd> escenarios predefinidos</li><li>Con el plano enfocado: <kbd>←↑↓→</kbd> mueven el dispositivo; con <kbd>Mayús</kbd> mueven el AP seleccionado (<kbd>Ctrl</kbd> = paso mayor)</li><li><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd> deshacer y rehacer · <kbd>Supr</kbd> borra la pared seleccionada</li></ul></div></div>
+  <div class="card2"><h3 style="margin-top:0">Cómo está organizado</h3><p><b>Simular</b>: escenario, guardado y exportación. <b>Laboratorio</b>: experimentos y validación con mediciones. <b>Física</b>: inspector, Modo Onda y límites. <b>Informe</b>: KPI, costos, comparador, misiones y material de la feria.<br><b>Nivel</b> Básico / Intermedio / Experto muestra más o menos controles. <b>Aa−/Aa+</b> cambian el tamaño del texto; <b>+ − ⌂</b> sobre el plano acercan, alejan y centran el plano; el tema se cambia con «Tema».</p></div>`);
+}
+
