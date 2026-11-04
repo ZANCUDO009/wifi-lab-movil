@@ -1,0 +1,7 @@
+{
+  "appId": "com.wifilab.app",
+  "appName": "Wi-Fi Lab",
+  "webDir": "www",
+  "backgroundColor": "#07101F",
+  "android": { "allowMixedContent": false }
+}
